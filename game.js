@@ -35,8 +35,8 @@ window.onload = function () {
   loadEnemyImages();
 
   const ciotti = {
-    x: 750,
-    y: 950,
+    x: 360,
+    y: 1300,
     size: 64,
     image: ciottiImg,
   };
@@ -122,8 +122,8 @@ window.onload = function () {
   //#region Projectiles
   function shootProjectile(mouseX, mouseY) {
     const angle = Math.atan2(
-      mouseY - 950 /*character.y*/,
-      mouseX - 750 /*character.x*/,
+      mouseY - ciotti.y /*character.y*/,
+      mouseX - ciotti.x /*character.x*/,
     );
     const speed = 5;
     const velocity = {
@@ -201,8 +201,8 @@ window.onload = function () {
     gameOver = false;
     enemies = []; // Reset enemies array
     projectiles = []; // Reset projectiles array
-    ciotti.x = 750; // Optionally reset the character's position
-    ciotti.y = 950;
+    //ciotti.x = 750; // Optionally reset the character's position
+    //ciotti.y = 950;
 
     // Remove any event listeners if necessary (handled by 'once', but here for completeness)
     canvas.removeEventListener("click", restartGame);
