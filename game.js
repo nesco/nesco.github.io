@@ -14,6 +14,10 @@ window.onload = function () {
   canvas.width = map.width;
   canvas.height = map.height;
 
+  let bgMusic = new Audio("music.mp3");
+  bgMusic.loop = true;
+  bgMusic.play();
+
   const ciottiImg = new Image();
   ciottiImg.src = "ciotti.png";
 
