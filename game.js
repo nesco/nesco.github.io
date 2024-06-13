@@ -14,10 +14,6 @@ window.onload = function () {
   canvas.width = map.width;
   canvas.height = map.height;
 
-  let bgMusic = new Audio("music.mp3");
-  bgMusic.loop = true;
-  bgMusic.play();
-
   const ciottiImg = new Image();
   ciottiImg.src = "ciotti.png";
 
@@ -69,7 +65,7 @@ window.onload = function () {
     enemyY = 100;
 
     const angle = Math.atan2(ciotti.y - enemyY, ciotti.x - enemyX);
-    const speed = 2; // Adjust speed as necessary
+    const speed = 3; // Adjust speed as necessary
 
     // Randomly select an image for the enemy
     const imageIndex = Math.floor(Math.random() * enemyImages.length);
