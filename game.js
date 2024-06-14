@@ -186,7 +186,7 @@ window.onload = function () {
     ctx.save(); // Save current state
 
     ctx.fillStyle = "white"; // Choose a color that stands out
-    ctx.font = "20px Arial"; // Set the size and font of the score text
+    ctx.font = "40px Arial"; // Set the size and font of the score text
     ctx.strokeStyle = "black"; // Color of the outline
     ctx.lineWidth = 3; // Width of the outline
     ctx.strokeText("Score: " + score, scoreX, scoreY);
@@ -297,10 +297,10 @@ window.onload = function () {
 
       //updateProjectiles();
 
-      updateGame();
       drawProjectiles();
       drawEnemies();
       drawScore();
+      updateGame();
       requestAnimationFrame(gameLoop);
     }
   }
