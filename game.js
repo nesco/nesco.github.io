@@ -6,6 +6,7 @@ window.onload = function () {
     //initializeCharacter(); // Reset or initialize the character
     gameLoop(); // Start the game loop
     score = 0;
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   const canvas = document.getElementById("gameCanvas");
@@ -234,6 +235,7 @@ window.onload = function () {
 
     // Remove any event listeners if necessary (handled by 'once', but here for completeness)
     canvas.removeEventListener("click", restartGame);
+    window.scrollTo(0, document.body.scrollHeight);
 
     // Restart the game loop
     gameLoop();
