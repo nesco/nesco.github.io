@@ -5,6 +5,7 @@ window.onload = function () {
     projectiles = []; // Clear projectiles
     //initializeCharacter(); // Reset or initialize the character
     gameLoop(); // Start the game loop
+    score = 0;
   }
 
   const canvas = document.getElementById("gameCanvas");
@@ -13,6 +14,12 @@ window.onload = function () {
 
   canvas.width = map.width;
   canvas.height = map.height;
+
+  let scoreX = 20;
+  let scoreY = canvas.height - 100;
+
+  let gameOverX = canvas.width / 2;
+  let gameOverY = canvas.height / 2 - 20;
 
   const ciottiImg = new Image();
   ciottiImg.src = "ciotti.png";
@@ -45,6 +52,7 @@ window.onload = function () {
   let enemies = [];
 
   let gameOver = false;
+  let score = 0;
 
   ciottiImg.onload = function () {
     ctx.drawImage(
@@ -65,7 +73,7 @@ window.onload = function () {
     enemyY = 100;
 
     const angle = Math.atan2(ciotti.y - enemyY, ciotti.x - enemyX);
-    const speed = 3; // Adjust speed as necessary
+    const speed = 3 + score * 0.1; // Adjust speed as necessary
 
     // Randomly select an image for the enemy
     const imageIndex = Math.floor(Math.random() * enemyImages.length);
@@ -174,20 +182,39 @@ window.onload = function () {
   }
   //#endregion
 
+  function drawScore() {
+    ctx.save(); // Save current state
+
+    ctx.fillStyle = "white"; // Choose a color that stands out
+    ctx.font = "20px Arial"; // Set the size and font of the score text
+    ctx.strokeStyle = "black"; // Color of the outline
+    ctx.lineWidth = 3; // Width of the outline
+    ctx.strokeText("Score: " + score, scoreX, scoreY);
+    ctx.fillText("Score: " + score, scoreX, scoreY); // Draw the score in the top-left corner
+
+    ctx.restore();
+  }
+
   function endGame() {
+    ctx.save();
     // Stop the animation/game loop by not calling requestAnimationFrame
     ctx.fillStyle = "rgba(0, 0, 0, 0.75)"; // Semi-transparent black overlay
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Game Over Text
     ctx.fillStyle = "white"; // White text color
-    ctx.font = "48px serif"; // Font size and family
+    ctx.font = "48px Arial"; // Font size and family
     ctx.textAlign = "center"; // Center the text horizontally
-    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 20); // Positioning the text
+    ctx.strokeStyle = "black"; // Color of the outline
+    ctx.lineWidth = 3;
+    ctx.strokeText("Game Over", gameOverX, gameOverY);
+    ctx.fillText("Game Over", gameOverX, gameOverY); // Positioning the text
 
     // Click to Restart Text
     ctx.font = "24px serif"; // Smaller font size for the restart prompt
     ctx.fillText("Click to Restart", canvas.width / 2, canvas.height / 2 + 40);
+
+    ctx.restore(); // Save current state
 
     // Add click event listener to the canvas to handle restart
     canvas.addEventListener("click", restartGame, { once: true });
@@ -201,6 +228,7 @@ window.onload = function () {
     gameOver = false;
     enemies = []; // Reset enemies array
     projectiles = []; // Reset projectiles array
+    score = 0;
     //ciotti.x = 750; // Optionally reset the character's position
     //ciotti.y = 950;
 
@@ -225,6 +253,7 @@ window.onload = function () {
         if (checkCollision(projectile, enemy)) {
           projectilesToRemove.add(pIndex);
           enemiesToRemove.add(eIndex);
+          score = score + 1;
         }
       });
     });
@@ -252,12 +281,10 @@ window.onload = function () {
     if (!gameOver) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (Math.random() < 0.01) {
+      if (Math.random() < 0.01 + score * 0.001) {
         // Adjust spawn rate as needed
         enemies.push(createEnemy());
       }
-      console.log(enemies.length);
-
       //updateEnemies();
 
       ctx.drawImage(
@@ -273,6 +300,7 @@ window.onload = function () {
       updateGame();
       drawProjectiles();
       drawEnemies();
+      drawScore();
       requestAnimationFrame(gameLoop);
     }
   }
